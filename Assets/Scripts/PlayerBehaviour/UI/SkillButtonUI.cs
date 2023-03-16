@@ -6,42 +6,45 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class SkillButtonUI : MonoBehaviour
 {
-    [SerializeField] private Sprite skillIcon;
-    [SerializeField] private TextMeshProUGUI timeRemainingText;
+    [SerializeField] private Sprite _skillIcon;
+    [SerializeField] private TextMeshProUGUI _timeRemainingText;
 
     //Temporary stuff
-    [SerializeField] private float skillCoolDown;
-    [SerializeField] private string skillName;
+    [SerializeField] private float _skillCoolDown;
+    [SerializeField] private string _skillName;
 
-    private Button button;
+    private Button _button;
+    private ShootSkill _shootSkill;
 
     private void Awake()
     {
-        button = GetComponent<Button>();
-        GetComponent<Image>().sprite = skillIcon;
-        timeRemainingText.gameObject.SetActive(false);
-        button.onClick.AddListener(SkillListener);
+        _shootSkill = FindObjectOfType<ShootSkill>();
+        _button = GetComponent<Button>();
+        GetComponent<Image>().sprite = _skillIcon;
+        _timeRemainingText.gameObject.SetActive(false);
+        _button.onClick.AddListener(SkillListener);
     }
 
     private void SkillListener()
     {
-        button.interactable = false;
-        timeRemainingText.gameObject.SetActive(true);
+        _shootSkill.Shoot();
+        _button.interactable = false;
+        _timeRemainingText.gameObject.SetActive(true);
         StartCoroutine(WaitForCoolDown());
     }
 
     private IEnumerator WaitForCoolDown()
     {
-        float timeRemaining = skillCoolDown - 1;
-        timeRemainingText.text = timeRemaining.ToString();
+        float timeRemaining = _skillCoolDown - 1;
+        _timeRemainingText.text = timeRemaining.ToString();
 
         while (timeRemaining > 0)
         {
             yield return new WaitForSeconds(1.0f);
             timeRemaining--;
-            timeRemainingText.text = timeRemaining.ToString();
+            _timeRemainingText.text = timeRemaining.ToString();
         }
-        button.interactable = true;
-        timeRemainingText.gameObject.SetActive(false);
+        _button.interactable = true;
+        _timeRemainingText.gameObject.SetActive(false);
     }
 }

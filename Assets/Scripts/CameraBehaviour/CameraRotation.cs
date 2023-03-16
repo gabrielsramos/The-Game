@@ -41,13 +41,11 @@ public class CameraRotation : MonoBehaviour
 
     private void StartRotation(InputAction.CallbackContext context)
     {
-        Debug.Log("[Camera] Started rotation");
         freeLookCamera.m_XAxis.m_MaxSpeed = rotationVelocity;
     }
 
     private void FinishRotation(InputAction.CallbackContext context)
     {
-        Debug.Log("[Camera] Finished rotation");
         freeLookCamera.m_XAxis.m_MaxSpeed = 0;
     }
 }

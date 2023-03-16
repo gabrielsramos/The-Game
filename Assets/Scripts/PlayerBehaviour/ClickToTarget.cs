@@ -35,14 +35,12 @@ namespace Assets.Scripts.PlayerBehaviour
 
         public override IEnumerator ClickActionCallback(GameObject targetObject, Vector3 _)
         {
-            Debug.Log("[CLICK] Got enemy target: " + Target);
             Target = targetObject;
             yield return null;
         }
 
         private void RemoveTarget(InputAction.CallbackContext context)
         {
-            Debug.Log("[ESC] Should clear target");
             Target = null;
         }
     }
